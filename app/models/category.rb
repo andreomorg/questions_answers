@@ -1,3 +1,4 @@
 class Category < ApplicationRecord
-  has_many :questions, :rounds
+  has_many :questions
+  has_many :rounds
 end
