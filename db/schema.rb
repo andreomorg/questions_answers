@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_27_201051) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_28_185202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,8 +20,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_27_201051) do
     t.datetime "updated_at", null: false
     t.bigint "question_id"
     t.bigint "option_id"
+    t.bigint "round_id"
     t.index ["option_id"], name: "index_answers_on_option_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["round_id"], name: "index_answers_on_round_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -35,6 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_27_201051) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "question_id"
+    t.boolean "correct", default: false
     t.index ["question_id"], name: "index_options_on_question_id"
   end
 
@@ -63,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_27_201051) do
 
   add_foreign_key "answers", "options"
   add_foreign_key "answers", "questions"
+  add_foreign_key "answers", "rounds"
   add_foreign_key "options", "questions"
   add_foreign_key "questions", "categories"
   add_foreign_key "rounds", "categories"
