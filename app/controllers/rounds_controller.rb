@@ -1,12 +1,11 @@
 class RoundsController < ApplicationController
   def create
-    create_round
-    render json: mount_body_round(create_round, nil), status: :ok
+    render json: create_round, serializer: RoundSerializer
   end
 
-  def index
+  def show
     round = Round.find(params[:round_id])
-    render json: mount_body_round(round, round.answers), status: :ok
+    render json: round, serializer: RoundSerializer
   end
 
   def answers

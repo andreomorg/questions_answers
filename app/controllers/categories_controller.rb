@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
-  def show
+  def index
     render json: Category.all, status: :ok
+    #each_serializer
   end
 end
