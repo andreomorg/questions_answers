@@ -7,7 +7,8 @@ Rails.application.routes.draw do
 
   post '/rounds/', to: 'rounds#create'
   post '/rounds/answers/', to: 'rounds#answers'
-  get '/rounds', to: 'rounds#index'
+
+  get '/rounds', to: 'rounds#show'
   get '/rounds/result', to: 'rounds#result'
-  get '/categories', to: 'categories#show'
+  get '/categories', to: 'categories#index'
 end

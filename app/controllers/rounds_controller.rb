@@ -15,24 +15,16 @@ class RoundsController < ApplicationController
 
   def result
     round = Round.find(params[:round_id])
-    render json: create_round_result(round), status: :ok
+    render json: round, serializer: ResultRoundSerializer
   end
 
   private
 
-  def mount_body_round(round, answers)
-    MountBodyRoundService.new(round:, answers:).call
-  end
-
-  def create_round_result(round)
-    RoundResultService.new(round).call
-  end
-
   def create_answers
-    @create_answers ||= CreateAnswerService.new(params:).call
+    CreateAnswerService.new(params:).call
   end
 
   def create_round
-    @create_round ||= CreateRoundService.new(params: params[:round]).call
+    CreateRoundService.new(params: params[:round]).call
   end
 end

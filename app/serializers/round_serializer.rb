@@ -6,34 +6,41 @@ class RoundSerializer < ActiveModel::Serializer
       round: {
         id: object.id,
         player_id: object.player_id,
-        questions: mount_question,
-        answers: object.answers.presence || []
+        questions:,
+        answers: object.answers.present? ? answers : []
       }
     }
   end
 
   private
 
-  def mount_question
-    array_of_questions = []
-    object.category.questions.sample(3).each do |question|
-      array_of_questions << {
+  def answers
+    object.answers.map do |answer|
+      {
+        id: answer.id,
+        question_id: answer.question_id,
+        option_id: answer.option_id,
+        correct: answer.correct
+      }
+    end
+  end
+
+  def questions
+    object.category.questions.sample(3).map do |question|
+      {
         id: question.id,
         description: question.description,
         options: mount_options(question.options)
       }
     end
-    array_of_questions
   end
 
   def mount_options(options)
-    array_of_options = []
-    options.each do |option|
-      array_of_options << {
+    options.map do |option|
+      {
         id: option.id,
         label: option.label
       }
     end
-    array_of_options
   end
 end
