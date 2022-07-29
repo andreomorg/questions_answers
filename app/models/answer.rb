@@ -7,6 +7,8 @@ class Answer < ApplicationRecord
 
   def correct?
     option_correct = Option.find_by(question_id:, correct: true)
+    return self.correct = false if option_correct.blank?
+
     self.correct = (option_correct.id == option_id)
   end
 end

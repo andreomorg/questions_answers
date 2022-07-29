@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Option, type: :model do
   context 'when is a valid option' do
     it 'then create a option' do
-      category = Category.create(name: 'teste')
+      category = Category.create(name: 'Matematica')
       question = Question.create(description: 'Quanto é 1+1', category_id: category.id)
       option = Option.create(label: '2', question_id: question.id)
 
