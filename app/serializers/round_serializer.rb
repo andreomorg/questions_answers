@@ -6,15 +6,17 @@ class RoundSerializer < ActiveModel::Serializer
       round: {
         id: object.id,
         player_id: object.player_id,
-        questions:,
-        answers: object.answers.present? ? answers : []
+        questions:mount_questions,
+        answers: mount_answers
       }
     }
   end
 
   private
 
-  def answers
+  def mount_answers
+    return [] if object.answers.blank?
+
     object.answers.map do |answer|
       {
         id: answer.id,
@@ -25,7 +27,7 @@ class RoundSerializer < ActiveModel::Serializer
     end
   end
 
-  def questions
+  def mount_questions
     object.category.questions.sample(3).map do |question|
       {
         id: question.id,
