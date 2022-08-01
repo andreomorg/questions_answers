@@ -5,9 +5,9 @@ RSpec.describe Answer, type: :model do
   let(:round) { Round.create(category_id: category.id, player_id: player.id) }
   let(:category) { Category.create(name: 'Matematica') }
   let(:question) { Question.create(description: 'Quanto é 1+1', category_id: category.id) }
+  let(:correct_option) { Option.create(label: '2', question_id: question.id, correct: true) }
 
   describe 'when is a valid answer' do
-    let(:correct_option) { Option.create(label: '2', question_id: question.id, correct: true) }
     let(:incorrect_option) { Option.create(label: '3', question_id: question.id, correct: false) }
 
     context 'and is a correct' do
@@ -33,8 +33,17 @@ RSpec.describe Answer, type: :model do
 
   context 'when is a invalid answer' do
     it 'then dont create' do
-      answer = Answer.create(round_id: round.id, question_id: question.id)
+      answer = Answer.create(round_id: round.id, option_id: correct_option.id)
       expect(answer.valid?).to be(false)
+    end
+
+    it 'because the option dont belong to question' do
+      question_incorrect = Question.create(description: 'Quanto é 1+2', category_id: category.id)
+      option_does_belong_question = Option.create(label: '2', question_id: question_incorrect.id, correct: false)
+
+      answer = Answer.create(round_id: round.id, question_id: question.id, option_id: option_does_belong_question.id)
+      expect(answer.valid?).to be(false)
+      expect(answer.errors.present?).to be(true)
     end
   end
 end
