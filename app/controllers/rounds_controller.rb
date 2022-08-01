@@ -1,30 +1,45 @@
 class RoundsController < ApplicationController
   def create
-    render json: create_round, serializer: RoundSerializer
+    if create_round.errors.present?
+      render json: create_round.errors.messages, status: :bad_request
+    else
+      render json: create_round, serializer: RoundSerializer
+    end
   end
 
   def show
     round = Round.find(params[:round_id])
-    render json: round, serializer: RoundSerializer
+    if round
+      render json: round, serializer: RoundSerializer
+    else
+      render json: {}, status: :unprocessable_entity
+    end
   end
 
   def answers
-    create_answers
-    render status: :ok
+    if create_answers.errors.present?
+      render json: create_answers.errors.messages, status: :bad_request
+    else
+      render status: :ok
+    end
   end
 
   def result
     round = Round.find(params[:round_id])
-    render json: round, serializer: ResultRoundSerializer
+    if round
+      render json: round, serializer: ResultRoundSerializer
+    else
+      render json: {}, status: :unprocessable_entity
+    end
   end
 
   private
 
   def create_answers
-    CreateAnswerService.new(params:).call
+    @create_answers ||= CreateAnswerService.new(params:).call
   end
 
   def create_round
-    CreateRoundService.new(params: params[:round]).call
+    @create_round ||= CreateRoundService.new(params: params[:round]).call
   end
 end
