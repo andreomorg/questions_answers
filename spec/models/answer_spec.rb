@@ -25,6 +25,7 @@ RSpec.describe Answer, type: :model do
 
       it 'then create a incorrect answer' do
         answer = Answer.create(round_id: round.id, question_id: question.id, option_id: incorrect_option.id)
+
         expect(answer.valid?).to be(true)
         expect(answer.correct).to be(false)
       end
@@ -37,13 +38,22 @@ RSpec.describe Answer, type: :model do
       expect(answer.valid?).to be(false)
     end
 
-    it 'because the option dont belong to question' do
+    it 'then dont create because the option dont belong to question' do
       question_incorrect = Question.create(description: 'Quanto é 1+2', category_id: category.id)
       option_does_belong_question = Option.create(label: '2', question_id: question_incorrect.id, correct: false)
 
       answer = Answer.create(round_id: round.id, question_id: question.id, option_id: option_does_belong_question.id)
       expect(answer.valid?).to be(false)
       expect(answer.errors.present?).to be(true)
+    end
+
+    it 'then dont create because there is already an answer to this question in the round' do
+      answer = Answer.create(round_id: round.id, question_id: question.id, option_id: correct_option.id)
+      incorrect_answer = Answer.create(round_id: round.id, question_id: question.id, option_id: correct_option.id)
+
+      expect(answer.valid?).to be(true)
+      expect(incorrect_answer.valid?).to be(false)
+      expect(incorrect_answer.errors.present?).to be(true)
     end
   end
 end

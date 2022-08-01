@@ -4,7 +4,7 @@ RSpec.describe RoundsController, type: :controller do
   let(:category) { Category.create(name: 'Matematica') }
   let(:player) { Player.create(name: 'Andreo') }
 
-  context 'create' do
+  context 'when call create' do
     it 'then create and return a round, questions and options' do
       Player.create(name: 'Andreo')
       question = Question.create(description: 'Quanto é 1+1', category_id: category.id)
@@ -21,7 +21,7 @@ RSpec.describe RoundsController, type: :controller do
     end
   end
 
-  context 'show' do
+  context 'when call show' do
     it 'then return a round, questions, options and answers' do
       question = Question.create(description: 'Quanto é 1+1', category_id: category.id)
       option = Option.create(label: '2', question_id: question.id, correct: true)
@@ -34,7 +34,7 @@ RSpec.describe RoundsController, type: :controller do
     end
   end
 
-  context 'answers' do
+  context 'when call answers' do
     it 'then create a answer for a round' do
       question = Question.create(description: 'Quanto é 1+1', category_id: category.id)
       option = Option.create(label: '2', question_id: question.id, correct: true)
@@ -51,7 +51,7 @@ RSpec.describe RoundsController, type: :controller do
     end
   end
 
-  context 'result' do
+  context 'when call result' do
     it 'then return result of the round' do
       question = Question.create(description: 'Quanto é 1+1', category_id: category.id)
       question2 = Question.create(description: 'Quanto é 1+2', category_id: category.id)

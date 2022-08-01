@@ -3,12 +3,10 @@ class RoundSerializer < ActiveModel::Serializer
 
   def round
     {
-      round: {
-        id: object.id,
-        player_id: object.player_id,
-        questions:mount_questions,
-        answers: mount_answers
-      }
+      id: object.id,
+      player_id: object.player_id,
+      questions: mount_questions,
+      answers: mount_answers
     }
   end
 

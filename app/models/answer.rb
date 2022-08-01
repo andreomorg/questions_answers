@@ -15,7 +15,7 @@ class Answer < ApplicationRecord
   end
 
   def option_belongs_question?
-    return if self.option.question_id == question_id
+    return if option.question_id == question_id
 
     errors.add(:option_id, message: 'Option does not belong to the question')
   end
