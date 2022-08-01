@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   post '/rounds/', to: 'rounds#create'
-  post '/rounds/:round_id/answers/', to: 'rounds#answers'
+  post '/rounds/:round_id/answers/', to: 'answers#create'
 
   get '/rounds/:round_id/', to: 'rounds#show'
   get '/rounds/:round_id/result', to: 'rounds#result'

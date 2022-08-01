@@ -8,7 +8,6 @@ class RoundsController < ApplicationController
   end
 
   def show
-    round = Round.find(params[:round_id])
     if round
       render json: round, serializer: RoundSerializer
     else
@@ -16,16 +15,7 @@ class RoundsController < ApplicationController
     end
   end
 
-  def answers
-    if create_answers.errors.present?
-      render json: create_answers.errors.messages, status: :bad_request
-    else
-      render status: :ok
-    end
-  end
-
   def result
-    round = Round.find(params[:round_id])
     if round
       render json: round, serializer: ResultRoundSerializer
     else
@@ -35,11 +25,19 @@ class RoundsController < ApplicationController
 
   private
 
-  def create_answers
-    @create_answers ||= CreateAnswerService.new(params:).call
+  def round
+    @round = Round.find(round_result_params[:round_id])
   end
 
   def create_round
-    @create_round ||= CreateRoundService.new(params: params[:round]).call
+    @create_round ||= CreateRoundService.new(params: round_params).call
+  end
+
+  def round_params
+    params.require(:round).permit(:player_name, :category_id)
+  end
+
+  def round_result_params
+    params.permit(:round_id)
   end
 end
