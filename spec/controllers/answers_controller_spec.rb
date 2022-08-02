@@ -8,7 +8,7 @@ RSpec.describe AnswersController, type: :controller do
       question = Question.create(description: 'Quanto é 1+1', category_id: category.id)
       option = Option.create(label: '2', question_id: question.id, correct: true)
       round = Round.create(category_id: category.id, player_id: player.id)
-      post "create", params: {
+      post 'create', params: {
         answer: {
           question_id: question.id,
           option_id: option.id

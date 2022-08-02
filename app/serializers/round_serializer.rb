@@ -26,7 +26,8 @@ class RoundSerializer < ActiveModel::Serializer
   end
 
   def mount_questions
-    object.category.questions.sample(3).map do |question|
+    QuestionsRound.where(round_id: object.id).map do |questionsround|
+      question = Question.find(questionsround.question_id)
       {
         id: question.id,
         description: question.description,

@@ -3,6 +3,7 @@ class RoundsController < ApplicationController
     if create_round.errors.present?
       render json: create_round.errors.messages, status: :bad_request
     else
+      sample_questions_for_round
       render json: create_round, serializer: RoundSerializer
     end
   end
@@ -26,18 +27,22 @@ class RoundsController < ApplicationController
   private
 
   def round
-    @round = Round.find(round_result_params[:round_id])
+    @round = Round.find(round_single_param[:round_id])
   end
 
   def create_round
     @create_round ||= CreateRoundService.new(params: round_params).call
   end
 
+  def sample_questions_for_round
+    CreateQuestionsRoundService.new(round: create_round).call
+  end
+
   def round_params
     params.require(:round).permit(:player_name, :category_id)
   end
 
-  def round_result_params
+  def round_single_param
     params.permit(:round_id)
   end
 end

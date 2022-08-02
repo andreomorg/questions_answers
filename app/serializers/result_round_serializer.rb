@@ -14,7 +14,7 @@ class ResultRoundSerializer < ActiveModel::Serializer
   private
 
   def total_questions
-    object.answers.select('distinct(question_id)').count
+    QuestionsRound.where(round_id: object.id).count
   end
 
   def total_answered_questions

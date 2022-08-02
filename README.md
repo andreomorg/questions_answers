@@ -1,24 +1,56 @@
-# README
+Essa API demonstra o uso de uma aplicação para um jogo de perguntas e respostas.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+## Install
 
-* Ruby version
+    bundle install
 
-* System dependencies
+## Run the data base
 
-* Configuration
+    rails db:create
 
-* Database creation
+## Run the migrations
 
-* Database initialization
+    rails db:migrate
 
-* How to run the test suite
+## Run the app
 
-* Services (job queues, cache servers, search engines, etc.)
+    rails s
 
-* Deployment instructions
+## Run the tests
 
-* ...
+    rspec
+
+# REST API
+
+## Create a round
+
+### Request
+
+`POST /rounds`
+
+
+## Get a round
+
+### Request
+
+`GET /rounds/:round_id`
+
+
+## Get result of a round
+
+### Request
+
+`GET /rounds/:round_id/result`
+
+## Create a answer for a round
+
+### Request
+
+`POST /rounds/:round_id/answers`
+
+## Get a list from categories
+
+### Request
+
+`GET /categories`

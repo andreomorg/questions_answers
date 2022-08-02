@@ -24,3 +24,14 @@ Style/Documentation:
   Enabled: false
 Rails/HasManyOrHasOneDependent:
   Enabled: false
+Layout/EndOfLine:
+   Enabled: false
+Style/NumericLiterals:
+  Exclude:
+    - 'db/*/'
+Style/StringLiterals:
+  Exclude:
+    - 'db/*/'
+Style/WordArray:
+  Exclude:
+    - 'db/*/'
